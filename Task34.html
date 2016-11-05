@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task</title>
+    <style>
+        .container {
+            border: 2px solid #333;
+            margin: 100px;
+            padding: 0;
+            position: relative;
+        }
+
+        .cell {
+            display: inline-block;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            float: left;
+        }
+
+        .row {
+            position: absolute;
+            left: -50px;
+            font-size: 14px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .col {
+            position: absolute;
+            top: -50px;
+            font-size: 16px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .robot {
+            position: absolute;
+            border-top: 8px solid blue;
+            box-sizing: border-box;
+            background-color: red;
+            transform: rotate(0deg);
+            transition: all .2s ease-in .04s;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+</div>
+<div>
+    <select name="go" id="go" class="command">
+        <option value="GO">GO</option>
+        <optgroup label="TUN">
+            <option value="TUN LEF">TUN LEF</option>
+            <option value="TUN RIG">TUN RIG</option>
+            <option value="TUN BAC">TUN BAC</option>
+        </optgroup>
+        <optgroup label="TRA">
+            <option value="TRA LEF">TRA LEF</option>
+            <option value="TRA TOP">TRA TOP</option>
+            <option value="TRA RIG">TRA RIG</option>
+            <option value="TRA BOT">TRA BOT</option>
+        </optgroup>
+        <optgroup label="MOV">
+            <option value="MOV LEF">MOV LEF</option>
+            <option value="MOV TOP">MOV TOP</option>
+            <option value="MOV RIG">MOV RIG</option>
+            <option value="MOV BOT">MOV BOT</option>
+        </optgroup>
+    </select>
+    <input type="button" class="go" value="Go">
+</div>
+<script !src="">
+    (function () {
+        function Table(config) {
+            this.config = config;
+            this.side = this.config.width / this.config.amount;
+            this.robotDeg = 0;
+        }
+
+        Table.prototype = {
+            constructor: Table,
+            init: function () {
+                var container = document.querySelector(this.config.container);
+                container.style.width = container.style.height = this.config.width + 'px';
+                for (let i = 0; i < this.config.amount; ++i) {
+                    var rowSpan = this._createEle('span', 'row', i + 1, 0);
+                    rowSpan.style.top = this.side * i + 'px';
+                    rowSpan.innerText = i + 1;
+                    document.querySelector(this.config.container).appendChild(rowSpan);
+                    for (let j = 0; j < this.config.amount; ++j) {
+                        if (i == 0) {
+                            var colSpan = this._createEle('span', 'col', 0, j + 1);
+                            colSpan.innerText = j + 1;
+                            document.querySelector(this.config.container).appendChild(colSpan);
+                        }
+                        document.querySelector(this.config.container).appendChild(this._createEle('span', 'cell', i + 1, j + 1));
+                    }
+                }
+                this._createRobot(this.config.robotX_axis, this.config.robotY_axis);
+            },
+            _createEle: function (tag, className, x_axis, y_axis) {
+                var tempSpan = document.createElement(tag);
+                tempSpan.style.width = tempSpan.style.height = this.side + 'px';
+                tempSpan.style.lineHeight = this.side + 'px';
+                tempSpan.className = className;
+                tempSpan.setAttribute('data-x', x_axis);
+                tempSpan.setAttribute('data-y', y_axis);
+                return tempSpan;
+            },
+            _createRobot: function (x_axis, y_axis) {
+                let robot = this._createEle('div', 'robot', x_axis, y_axis);
+                robot.style.top = this.side * (y_axis - 1) + 'px';
+                robot.style.left = this.side * (x_axis - 1) + 'px';
+                robot.style.transform = `rotate(${this.robotDeg}deg)`;
+                robot.style.zIndex = 2;
+                document.querySelector(this.config.container).appendChild(robot);
+            },
+            robotGo: function (direction) {
+                let robot = document.querySelector('.robot');
+                let deg = /[+-]?[\d]+/.exec(robot.style.transform);
+                var robotX = parseInt(robot.getAttribute('data-x'));
+                var robotY = parseInt(robot.getAttribute('data-y'));
+                switch (direction || (deg % 360) / 90) {
+                    case 0:
+                        if (robotX > 1) {
+                            robot.style.top = this.side * (robotX - 2) + 'px';
+                            robot.setAttribute('data-x', `${robotX - 1}`);
+                        } else {
+                            alert("别动！到边了~")
+                        }
+                        break;
+                    case 1:
+                    case -3:
+                        if (robotY < this.config.amount) {
+                            robot.style.left = this.side * robotY + 'px';
+                            robot.setAttribute('data-y', `${robotY + 1}`);
+                        } else {
+                            alert("别动！到边了~")
+                        }
+                        break;
+                    case 2:
+                    case -2:
+                        if (robotX < this.config.amount) {
+                            robot.style.top = this.side * robotX + 'px';
+                            robot.setAttribute('data-x', `${robotX + 1}`);
+                        } else {
+                            alert("别动！到边了~")
+                        }
+                        break;
+                    case 3:
+                    case -1:
+                        if (robotY > 1) {
+                            robot.style.left = this.side * (robotY - 2) + 'px';
+                            robot.setAttribute('data-y', `${robotY - 1}`);
+                        } else {
+                            alert("别动！到边了~")
+                        }
+                        break;
+                }
+            },
+            robotTurn: function (command) {
+                let robot = document.querySelector('.robot');
+                let deg = /[+-]?[\d]+/.exec(robot.style.transform);
+                switch (command) {
+                    case 'TUN LEF':
+                        deg -= 90;
+                        break;
+                    case 'TUN RIG':
+                        deg = parseInt(deg) + 90;
+                        break;
+                    case 'TUN BAC':
+                        deg = parseInt(deg) + 180;
+                        break;
+                    case 'MOV LEF':
+                        deg = -90;
+                        break;
+                    case 'MOV TOP':
+                        deg = 0;
+                        break;
+                    case 'MOV RIG':
+                        deg = 90;
+                        break;
+                    case 'MOV BOT':
+                        deg = 180;
+                        break;
+                }
+                robot.style.transform = `rotate(${deg}deg)`;
+            }
+        };
+
+        var config = {
+            width: 500,
+            amount: 15,
+            container: ".container",
+            robotX_axis: 8,
+            robotY_axis: 8
+        };
+        var temp = new Table(config);
+        var goBtn = document.querySelector('.go');
+        var command = document.querySelector('.command');
+
+        temp.init();
+        goBtn.onclick = function () {
+            switch (command.options[command.selectedIndex].value) {
+                case 'GO':
+                    temp.robotGo();
+                    break;
+                case 'TRA LEF':
+                    temp.robotGo(-1);
+                    break;
+                case 'TRA TOP':
+                    temp.robotGo(0);
+                    break;
+                case 'TRA RIG':
+                    temp.robotGo(1);
+                    break;
+                case 'TRA BOT':
+                    temp.robotGo(2);
+                    break;
+                case 'TUN LEF':
+                    temp.robotTurn('TUN LEF')
+                    break;
+                case 'TUN RIG':
+                    temp.robotTurn('TUN RIG');
+                    break;
+                case 'TUN BAC':
+                    temp.robotTurn('TUN BAC')
+                    break;
+                case 'MOV LEF':
+                    temp.robotTurn('MOV LEF')
+                    temp.robotGo(-1);
+                    break;
+                case 'MOV TOP':
+                    temp.robotTurn('MOV TOP');
+                    temp.robotGo(0);
+                    break;
+                case 'MOV RIG':
+                    temp.robotTurn('MOV RIG');
+                    temp.robotGo(1);
+                    break;
+                case 'MOV BOT':
+                    temp.robotTurn('MOV BOT');
+                    temp.robotGo(2);
+                    break;
+            }
+        };
+    })()
+</script>
+</body>
+</html>

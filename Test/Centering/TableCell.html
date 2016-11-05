@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表格Table-Cell</title>
+    <style>
+        .Center-Container.is-Table {
+            display: table;
+            width:80vw;
+            height:80vh;
+        }
+
+        .is-Table .Table-Cell {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .is-Table .Center-Block {
+            width: 50%;
+            height: 50%;
+            margin: 0 auto;
+            background-color: #333;
+        }
+
+    </style>
+</head>
+<body>
+<div class="Center-Container is-Table">
+    <div class="Table-Cell">
+        <div class="Center-Block">
+            <span>兼容性好，高度可变，但需要额外html标签</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

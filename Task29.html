@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task29</title>
+    <style>
+        .form label {
+            width: 70px;
+            display: inline-block;
+            text-align: center;
+            float: left;
+            line-height: 40px;
+        }
+
+        .form input {
+            width: 310px;
+            height: 30px;
+            padding: 5px 10px;
+            float: left;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1) inset;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .form button {
+            float: left;
+            height: 40px;
+            padding: 0 30px;
+            border: 1px solid #2c6ba7;
+            border-radius: 5px;
+            background-color: #3278b8;
+            color: #fff;
+            outline: none;
+            cursor: pointer;
+            margin-left: 8px;
+            font-size: 16px;
+        }
+
+        .form .msg {
+            float: left;
+            clear: both;
+            margin-left: 70px;
+            color: #666;
+            font-size: 14px;
+            margin-top: 4px;
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+<div class="form">
+    <label for="name">名称</label>
+    <input class="txtInput" id="name" type="text">
+    <button class="checkBtn">验证</button>
+    <span class="msg">必填，长度为4~16个字符</span>
+</div>
+<script !src="">
+    (function () {
+        var txtInput = document.querySelector('.txtInput');
+        var checkBtn = document.querySelector('.checkBtn');
+        var msg = document.querySelector('.msg');
+
+        function check(str) {
+            var strLength = str.replace(/[^\x00-\xff]/g, 'xx').length;
+            if (strLength == '') {
+                msg.innerText = '名称不能为空';
+                msg.style.color = 'red';
+                txtInput.style.borderColor = 'red';
+            } else if (strLength >= 4 && strLength < 16) {
+                msg.innerText = '名称格式正确';
+                msg.style.color = 'green';
+                txtInput.style.borderColor = 'green';
+            } else if (strLength > 16 || strLength < 4) {
+                msg.innerText = '名称格式错误';
+                msg.style.color = 'red';
+                txtInput.style.borderColor = 'red';
+            }
+        }
+
+        checkBtn.onclick = function () {
+            check(txtInput.value);
+        }
+    })()
+</script>
+</body>
+</html>

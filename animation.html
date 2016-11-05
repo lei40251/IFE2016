@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Animation</title>
+    <style>
+        .container {
+            width: 800px;
+            height: 50px;
+            margin: 0 auto;
+            background-color: #efefef;
+            border: 1px solid #aaa;
+            position: relative;
+        }
+
+        .block {
+            width: 50px;
+            height: 50px;
+            background-color: #00B83F;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="block"></div>
+</div>
+<script !src="">
+    var container = document.querySelector('.container');
+    var block = document.querySelector('.block');
+
+    var bNow = block.style.left;
+
+    function speed(n, g, t) {
+        var n = n;
+        if (n == '') {
+            n = 0;
+        }
+    }
+
+    /*function animation(n, g, t) {
+     if (n != g) {
+     setTimeout(function () {
+     speed(bNow, 100, 1000);
+     }, 4000)
+     }
+     }*/
+
+    function animation(start, end, time, ele, attr) {
+        if (start != end) {
+            ele.style[attr] = parseInt(getComputedStyle(ele,null).getPropertyValue(attr)) + (end - start) / Math.ceil(time / 40) + 'px';
+            setTimeout(function () {
+                animation(start, end, time, ele, attr);
+            }, 40)
+        }
+    }
+
+    //    animation(parseInt(getComputedStyle(document.querySelector('.block'),null).getPropertyValue('left')),100,3000,document.querySelector('.block').style.left)
+
+
+</script>
+</body>
+</html>

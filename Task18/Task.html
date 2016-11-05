@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        ul {
+            float: left;
+            margin: 10px 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            float: left;
+            padding: 10px 20px;
+            background-color: red;
+            color: #ffffff;
+            margin-right: 10px;
+        }
+
+        li:hover {
+            cursor: pointer;
+        }
+
+        .lout {
+            margin-left: 20px;
+        }
+    </style>
+    <title>Task</title>
+</head>
+<body>
+<div>
+    <input type="text" class="item-input">
+    <button class="lin">左侧入</button>
+    <button class="rin">右侧入</button>
+    <button class="lout">左侧出</button>
+    <button class="rout">右侧出</button>
+</div>
+<ul class="items-display"></ul>
+<script src="task.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        div {
+            width: 50px;
+            height: 50px;
+            background-color: #fff;
+        }
+    </style>
+    <title>Title</title>
+</head>
+<body>
+<p class="pTest" style="padding: 20px;">
+    <a class="aTest" href="#" style="padding: 10px;width: 200px;background-color: #444;display: inline-block;">
+    </a>
+</p>
+<script !src="">
+    (function () {
+        var div = document.createElement('div');
+        div.className = 'divTest';
+        var aTest = document.querySelector('.aTest');
+        var pTest = document.querySelector('.pTest');
+        pTest.onmouseover = function (e) {
+            if (e.target.nodeName.toLocaleLowerCase() == 'a') {
+                aTest.appendChild(div);
+            }
+        }
+        pTest.onmouseout = function (e) {
+            if (e.target.nodeName.toLocaleLowerCase() == 'a' && e.relatedTarget.nodeName.toLocaleLowerCase() != 'div') {
+                if (e.target.children.length > 0) {
+                    console.log(e.target.nodeName+'********'+e.relatedTarget.nodeName);
+                    e.target.removeChild(e.target.children[0]);
+                }
+            }
+        }
+    })();
+</script>
+</body>
+</html>

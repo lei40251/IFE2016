@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        div {
+            border: 1px solid #ccc;
+            padding: 50px;
+            float: left;
+            width: 50%;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+
+        .root {
+            width: 100%;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        input[type=button] {
+            padding: 8px 20px;
+            margin: 20px;
+        }
+    </style>
+    <title>Task22</title>
+</head>
+<body>
+<div class="root">
+    <div class="child_1">
+        <div class="child_2">
+            <div class="child_3"></div>
+            <div class="child_3"></div>
+        </div>
+        <div class="child_2">
+            <div class="child_3"></div>
+            <div class="child_3"></div>
+        </div>
+    </div>
+    <div class="child_1">
+        <div class="child_2">
+            <div class="child_3"></div>
+            <div class="child_3"></div>
+        </div>
+        <div class="child_2">
+            <div class="child_3"></div>
+            <div class="child_3"></div>
+        </div>
+    </div>
+</div>
+<p>
+    <input type="button" class="dlr" value="前序">
+    <input type="button" class="ldr" value="中序">
+    <input type="button" class="lrd" value="后序">
+</p>
+<script !src="">
+    (function () {
+        var dlr = document.querySelector('.dlr');
+        var ldr = document.querySelector('.ldr');
+        var lrd = document.querySelector('.lrd');
+        var root = document.querySelector('.root');
+        var animationList = [];
+
+        function fDlr(node) {
+            if (node) {
+                animationList.push(node);
+                console.log(node.className);
+                fDlr(node.firstElementChild);
+                fDlr(node.lastElementChild);
+            }
+        }
+
+        function fLdr(node) {
+            if (node) {
+                fLdr(node.firstElementChild);
+                console.log(node.className);
+                animationList.push(node);
+                fLdr(node.lastElementChild);
+            }
+        }
+
+        function fLrd(node) {
+            if (node) {
+                fLrd(node.firstElementChild);
+                fLrd(node.lastElementChild);
+                console.log(node.className);
+                animationList.push(node);
+            }
+        }
+
+        var i = 0;
+
+        function animation(arr) {
+            if (i < arr.length) {
+                arr[i].style.backgroundColor = 'blue';
+                setTimeout(function () {
+                    arr[i].style.backgroundColor = '#fff';
+                    i++;
+                    animation(arr);
+                }, 500)
+            }
+        }
+
+        dlr.onclick = function () {
+            i = 0;
+            animationList = [];
+            fDlr(root);
+            animation(animationList);
+        }
+
+        ldr.onclick = function () {
+            i = 0;
+            animationList = [];
+            fLdr(root);
+            animation(animationList);
+        }
+
+        lrd.onclick = function () {
+            i = 0;
+            animationList = [];
+            fLrd(root);
+            animation(animationList);
+        }
+    })()
+</script>
+</body>
+</html>

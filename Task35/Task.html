@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task</title>
+    <style>
+        body {
+            font-family: "M+ 1mn", "Microsoft YaHei Mono", sans-serif;
+        }
+
+        .container {
+            border: 1px solid #ccc;
+            border-right: none;
+            border-bottom: none;
+            margin: 50px auto;
+            padding: 0;
+            position: relative;
+        }
+
+        .cell {
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-left: none;
+            border-top: none;
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            float: left;
+        }
+
+        .row {
+            position: absolute;
+            left: -50px;
+            font-size: 16px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .col {
+            position: absolute;
+            /*top: -50px;*/
+            font-size: 16px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .robot {
+            position: absolute;
+            border-top: 8px solid blue;
+            box-sizing: border-box;
+            background-color: red;
+            transform: rotate(0deg);
+            /*transition: all .2s ease-in .04s;*/
+        }
+
+        .cmd {
+            width: 500px;
+            height: 150px;
+            margin: 0 auto;
+            clear: both;
+        }
+
+        .line {
+            height: 110px;
+            overflow: hidden;
+            background-color: #bbb;
+            display: inline-block;
+            padding: 5px 0;
+            float: left;
+        }
+
+        .line ul {
+            padding: 0;
+            margin: 0;
+            color: #fff;
+            line-height: 1.5;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .line li {
+            padding: 0 6px;
+            text-align: center;
+        }
+
+        .line li.now {
+            background-color: darkslateblue;
+        }
+
+        .line li.warning {
+            background-color: red;
+        }
+
+        .cmd textarea {
+            height: 110px;
+            float: left;
+            font-size: 14px;
+            padding: 5px;
+            width: 450px;
+            background-color: #000;
+            color: limegreen;
+            border: none;
+            resize: none;
+            line-height: 1.5;
+            font-family: "M+ 1mn", "Microsoft YaHei Mono", sans-serif;
+        }
+
+        textarea:focus {
+            border: none;
+            outline: none;
+        }
+
+        input[type=button] {
+            padding: 10px 25px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+</div>
+<!--<div>
+    <select name="go" id="go" class="command">
+        <option value="GO">GO</option>
+        <optgroup label="TUN">
+            <option value="TUN LEF">TUN LEF</option>
+            <option value="TUN RIG">TUN RIG</option>
+            <option value="TUN BAC">TUN BAC</option>
+        </optgroup>
+        <optgroup label="TRA">
+            <option value="TRA LEF">TRA LEF</option>
+            <option value="TRA TOP">TRA TOP</option>
+            <option value="TRA RIG">TRA RIG</option>
+            <option value="TRA BOT">TRA BOT</option>
+        </optgroup>
+        <optgroup label="MOV">
+            <option value="MOV LEF">MOV LEF</option>
+            <option value="MOV TOP">MOV TOP</option>
+            <option value="MOV RIG">MOV RIG</option>
+            <option value="MOV BOT">MOV BOT</option>
+        </optgroup>
+    </select>
+    <input type="button" class="go" value="Go">
+</div>-->
+<div style="width: 500px; height: 50px; margin: 20px auto;"><input class="run" style="float: right;" type="button"
+                                                                   value="Run"><input style="float: left;"
+                                                                                      onclick="history.go(0)"
+                                                                                      type="button" value="Refresh">
+</div>
+<div class="cmd">
+    <div class="line">
+        <ul></ul>
+    </div>
+    <textarea class="coding" spellcheck="false"></textarea>
+</div>
+<script src="../baseFn.js"></script>
+<script src="Grid.js"></script>
+<script src="Command.js"></script>
+<script !src="">
+    "use strict";
+    (function () {
+        var config = {
+            width: 360,
+            amount: 15,
+            container: ".container",
+            robotX_axis: 7,
+            robotY_axis: 7
+        };
+        var command = document.querySelector('.command');
+        var run = document.querySelector('.run');
+
+        var tempGrid = createGrid(config);
+        tempGrid.init();
+
+        run.onclick = function () {
+            var code = coding.value.split('\n');
+            for (let i = 0; i < code.length; ++i) {
+                let command = code[i].replace(/ \d*$/, '');
+                let numArr = /\d*$/.exec(code[i]);
+
+                switch (command) {
+                    case 'GO':
+                        tempGrid.robotGo({
+                            num: numArr[0]
+                        });
+                        break;
+                    case 'TRA LEF':
+                        tempGrid.robotGo({
+                            direction: -1,
+                            num: numArr[0]
+                        });
+                        break;
+                    case 'TRA TOP':
+                        tempGrid.robotGo({
+                            direction: 0,
+                            num: numArr[0]
+                        });
+                        break;
+                    case 'TRA RIG':
+                        tempGrid.robotGo({
+                            direction: 1,
+                            num: numArr[0]
+                        });
+                        break;
+                    case 'TRA BOT':
+                        tempGrid.robotGo({
+                            direction: 2,
+                            num: numArr[0]
+                        });
+                        break;
+                    case 'TUN LEF':
+                        if (numArr[0] != '') {
+                            console.error('命令输入错误！');
+                            break;
+                        }
+                        tempGrid.robotTurn('TUN LEF');
+                        break;
+                    case 'TUN RIG':
+                        if (numArr[0] != '') {
+                            console.error('命令输入错误！');
+                            break;
+                        }
+                        tempGrid.robotTurn('TUN RIG');
+                        break;
+                    case 'TUN BAC':
+                        if (numArr[0] != '') {
+                            console.error('命令输入错误！');
+                            break;
+                        }
+                        tempGrid.robotTurn('TUN BAC')
+                        break;
+                    case 'MOV LEF':
+                        tempGrid.robotTurn('MOV LEF')
+                        tempGrid.robotGo({
+                            direction: -1,
+                            num: numArr[0]
+                        });
+                        break;
+                    case 'MOV TOP':
+                        tempGrid.robotGo({
+                            direction: 0,
+                            num: numArr[0]
+                        });
+                        tempGrid.robotTurn('MOV TOP');
+                        break;
+                    case 'MOV RIG':
+                        tempGrid.robotGo({
+                            direction: 1,
+                            num: numArr[0]
+                        });
+                        tempGrid.robotTurn('MOV RIG');
+                        break;
+                    case 'MOV BOT':
+                        tempGrid.robotGo({
+                            direction: 2,
+                            num: numArr[0]
+                        });
+                        tempGrid.robotTurn('MOV BOT');
+                        break;
+                    default:
+                        console.error('命令输入错误！');
+                }
+            }
+
+        };
+    })()
+</script>
+</body>
+</html>

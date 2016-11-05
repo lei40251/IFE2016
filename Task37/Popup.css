@@ -1,0 +1,47 @@
+.mask {
+    background-color: rgba(0, 0, 0, .5);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#popup {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    /*other*/
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.2);
+    width: 60%;
+    height: 45%;
+    border-radius: 5px;
+}
+
+#popup .header {
+    width: 100%;
+    height: 20%;
+    border-bottom: 1px solid #ccc;
+}
+
+#popup .close{
+    position: absolute;
+    right:0;
+    top:0;
+    font-size: 24px;
+    color: #cccccc;
+}
+
+#popup .content {
+    height: 60%;
+}
+
+#popup .bottom {
+    width: 100%;
+    height: 20%;
+    border-top: 1px solid #ccc;
+}

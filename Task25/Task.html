@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/demo.css">
+    <link rel="stylesheet" href="css/metroStyle/metroStyle.css">
+    <style>
+        .ztree li a:hover {
+            text-decoration: none;
+        }
+
+        .ztree li a:hover span {
+            display: inline-block;
+        }
+
+        .spanList {
+            display: none;
+        }
+
+        .node_name:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <title>Task25</title>
+</head>
+<body>
+<ul class="ztree root">
+    <li class="level0">
+        <span class="button level0 switch roots_open"></span>
+        <a class="level0" target="_blank" title="父节点1">
+            <span class="button ico_open"></span>
+            <span class="node_name">父节点1</span>
+            <span class="spanList"><span class="button add"></span><span
+                    class="button edit"></span><span class="button remove"></span></span></a>
+        <ul class="level0 line" style="display:block">
+            <li class="level1">
+                <span class="button level1 switch center_close"></span>
+                <a class="level1" target="_blank" title="父节点11">
+                    <span class="button ico_close"></span>
+                    <span class="node_name">父节点11</span>
+                    <span class="spanList"><span class="button add"></span><span
+                            class="button edit"></span><span class="button remove"></span></span>
+                </a>
+            </li>
+            <li class="level1">
+                <span class="button level1 switch center_close"></span>
+                <a class="level1" target="_blank" title="父节点12">
+                    <span class="button ico_close"></span>
+                    <span class="node_name">父节点12</span>
+                    <span class="spanList"><span class="button add"></span><span
+                            class="button edit"></span><span class="button remove"></span></span>
+                </a>
+            </li>
+            <li class="level1">
+                <span class="button level1 switch bottom_close"></span>
+                <a class="level1" target="_blank" title="父节点13">
+                    <span class="button ico_close"></span>
+                    <span class="node_name">父节点13</span>
+                    <span class="spanList"><span class="button add"></span><span
+                            class="button edit"></span><span class="button remove"></span></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="level0">
+        <span class="button level0 switch center_close"></span>
+        <a class="level0" target="_blank" title="父节点2">
+            <span class="button ico_close"></span>
+            <span class="node_name">父节点2</span>
+            <span class="spanList"><span class="button add"></span><span
+                    class="button edit"></span><span class="button remove"></span></span>
+        </a>
+        <ul class="level0 line" style="display:none">
+            <li class="level1">
+                <span class="button level1 switch center_close"></span>
+                <a class="level1" target="_blank" title="父节点11">
+                    <span class="button ico_close"></span>
+                    <span class="node_name">父节点11</span>
+                    <span class="spanList"><span class="button add"></span><span
+                            class="button edit"></span><span class="button remove"></span></span>
+                </a>
+            </li>
+            <li class="level1">
+                <span class="button level1 switch center_close"></span>
+                <a class="level1" target="_blank" title="父节点12">
+                    <span class="button ico_close"></span>
+                    <span class="node_name">父节点12</span>
+                    <span class="spanList"><span class="button add"></span><span
+                            class="button edit"></span><span class="button remove"></span></span>
+                </a>
+            </li>
+            <li class="level1">
+                <span class="button level1 switch bottom_close"></span>
+                <a class="level1" target="_blank" title="父节点13">
+                    <span class="button ico_close"></span>
+                    <span class="node_name">父节点13</span>
+                    <span class="spanList"><span class="button add"></span><span
+                            class="button edit"></span><span class="button remove"></span></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="level0">
+        <span class="button level0 switch bottom_open"></span>
+        <a class="level0" target="_blank" title="父节点3">
+            <span class="button ico_close"></span>
+            <span class="node_name">父节点3</span>
+            <span class="spanList"><span class="button add"></span><span
+                    class="button edit"></span><span class="button remove"></span></span>
+        </a>
+    </li>
+</ul>
+<p>
+    <button class="btn">Test</button>
+    <input type="text" class="txtInput">
+    <button class="searchBtn">Search</button>
+</p>
+
+<script !src="">
+    (function () {
+        var root = document.querySelector('.root');
+        var switchNodes = root.querySelectorAll('.switch');
+        var nodeBST = [];
+        var btn = document.querySelector('.btn');
+        var txtInput = document.querySelector('.txtInput');
+        var searchBtn = document.querySelector('.searchBtn');
+
+        //折叠展开节点
+        function deployable(node) {
+            var nodeChild = node.children;
+            var switchNode = '';
+            var aBtn = '';
+            if (nodeChild) {
+                for (let i = 0; i < nodeChild.length; ++i) {
+                    if (nodeChild[i].nodeName.toLocaleLowerCase() == 'a') {
+                        var aChild = nodeChild[i].children;
+                        for (let j = 0; j < aChild.length; ++j) {
+                            if (aChild[j].className.indexOf('button') > -1) {
+                                aBtn = aChild[j]
+                            }
+                        }
+                    }
+                    if (nodeChild[i].className.indexOf('switch') > -1) {
+                        switchNode = nodeChild[i];
+                    }
+                    if (nodeChild[i].nodeName.toLocaleLowerCase() == 'ul') {
+                        nodeChild[i].style.display == 'none' ? nodeChild[i].style.display = "block" : nodeChild[i].style.display = 'none';
+                        (switchNode.className.indexOf('open') > -1) ? switchNode.className = switchNode.className.replace('open', 'close') : switchNode.className = switchNode.className.replace('close', 'open');
+                        (aBtn.className.indexOf('open') > -1) ? aBtn.className = aBtn.className.replace('open', 'close') : aBtn.className = aBtn.className.replace('close', 'open');
+                    }
+                }
+            }
+        }
+
+        //生成要添加的节点的内容
+        function createContent(element) {
+            var ul = document.createElement('ul');
+            var li = document.createElement('li');
+            var strContent = `<span class="button level0 switch center_close"></span>
+                              <a class="level0" target="_blank" title="newNode">
+                                  <span class="button ico_close"></span>
+                                  <span class="node_name">newNode</span>
+                                  <span class="spanList">
+                                      <span class="button add"></span>
+                                      <span class="button edit"></span>
+                                      <span class="button remove"></span>
+                                  </span>
+                              </a>`;
+            if (element == 'ul') {
+                li.innerHTML = strContent;
+                ul.appendChild(li);
+                return ul;
+            } else if (element == 'li') {
+                li.innerHTML = strContent;
+                return li;
+            }
+        }
+
+        //添加节点
+        function addNode(node) {
+            if (node.parentNode.parentNode.nextElementSibling != null && node.parentNode.parentNode.nextElementSibling.nodeName.toLocaleLowerCase() == 'ul') {
+                node.parentNode.parentNode.nextElementSibling.appendChild(createContent('li'));
+            } else if (node.parentNode.parentNode.nextElementSibling == null) {
+                node.parentNode.parentNode.parentNode.appendChild(createContent('ul'));
+            }
+        }
+
+        //删除节点
+        function delNode(node) {
+            node.parentNode.parentNode.parentNode.parentNode.removeChild(node.parentNode.parentNode.parentNode);
+        }
+
+        //生成目录树的数组
+        function createNodeArr(node) {
+            if (node.nodeName.toLocaleLowerCase() == 'ul') {
+                var nodeChildren = node.children;
+                for (let i = 0; i < nodeChildren.length; ++i) {
+                    if (nodeChildren[i].children.length > 0) {
+                        var liChildren = nodeChildren[i].children;
+                        for (let j = 0; j < liChildren.length; ++j) {
+                            if (liChildren[j].nodeName.toLocaleLowerCase() == 'ul') {
+                                createNodeArr(liChildren[j]);
+                            }
+                        }
+                        nodeBST.push(nodeChildren[i]);
+                    }
+                }
+            }
+            return nodeBST;
+        }
+
+
+        //查找父元素
+        var tempArr = [];
+        function closet(root, node, ele) {
+            if (node.parentNode != root) {
+                if (node.parentNode.nodeName.toLocaleLowerCase() == ele) {
+                    tempArr.push(node.parentNode);
+                }
+                closet(root, node.parentNode, ele);
+            }
+            return tempArr;
+        }
+
+        //查找内容
+        function queryTxt(arr, txt) {
+            if (i < arr.length) {
+                if (arr[i].getElementsByTagName('a')[0].querySelector('.node_name').innerText.indexOf(txt) > -1) {
+                    var arrT = closet(root, arr[i], 'ul');
+                    for (let j = 0; j < arrT.length; ++j) {
+                        arrT[j].style.display = 'block';
+                    }
+                    arr[i].style.backgroundColor = 'red';
+                }
+                i++;
+                queryTxt(arr, txt);
+            }
+        }
+
+        //遍历动画
+        var i = 0;
+
+        function animation(arr) {
+            if (i < arr.length) {
+                arr[i].style.backgroundColor = 'blue';
+                setTimeout(function () {
+                    arr[i].style.backgroundColor = 'transparent';
+                    i++;
+                    animation(arr);
+                }, 500)
+            }
+        }
+
+        root.onclick = function (e) {
+            if (e.target.className.indexOf('switch') > -1) {
+                deployable(e.target.parentNode);
+            } else if (e.target.className.indexOf('add') > -1) {
+                addNode(e.target);
+            } else if (e.target.className.indexOf('remove') > -1) {
+                delNode(e.target);
+            }
+        }
+
+        btn.onclick = function () {
+            i = 0;
+            nodeBST = [];
+            animation(createNodeArr(root));
+        }
+
+        searchBtn.onclick = function () {
+            i = 0;
+            nodeBST = [];
+            queryTxt(createNodeArr(root), txtInput.value);
+            /*if (!/[1][34578]\d{9}/.test(txtInput.value)) {
+             txtInput.focus();
+             txtInput.style.borderColor = 'red';
+             }*/
+        }
+
+    })();
+</script>
+</body>
+</html>

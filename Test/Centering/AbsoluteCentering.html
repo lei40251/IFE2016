@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绝对居中( AbsoluteCentering )</title>
+    <style>
+        .Center-Container {
+            position: relative;
+            /*other*/
+            /*margin-left: 15vw;*/
+            /*margin-top: 15vh;*/
+            width: 80vw;
+            height: 80vh;
+            background-color: rgba(0, 0, 0, .6);
+        }
+
+        .Absolute-Center {
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: auto;
+            /*other*/
+            background-color: #ccc;
+            width:50%;
+            height:50%;
+            min-width: 200px;
+            min-height: 100px;
+            max-width:400px;
+            max-height:200px;
+        }
+
+        /*固定位置*/
+        .Absolute-Center.is-Fixed {
+            position: fixed;
+            z-index: 2;
+        }
+
+        .Absolute-Center.is-Left {
+            right: auto;
+            left: 20px;
+            text-align: left;
+        }
+
+        .Absolute-Center.is-Right {
+            left: auto;
+            right: 20px;
+            text-align: right;
+        }
+
+        /*响应式*/
+        .Absolute-Center.is-Responsive {
+            width: 60%;
+            height: 60%;
+            min-width: 200px;
+            max-width: 400px;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        /*重绘*/
+        .Absolute-Center.Resizable {
+            min-width: 20%;
+            max-width: 80%;
+            min-height: 20%;
+            max-height: 80%;
+            resize: both;
+            overflow: auto;
+        }
+
+        /*图片*/
+        .Absolute-Center.is-Image {
+            height: auto;
+        }
+
+        .Absolute-Center.is-Image img {
+            width: 100%;
+            height: auto;
+        }
+
+    </style>
+</head>
+<body>
+<div class="Center-Container">
+    <div class="Absolute-Center">
+        <div class="">特点：<br>必须设置尺寸(支持百分比)</div>
+    </div>
+</div>
+<div style="height: 100vh;background-color: #f8f8f8;">00000000000000000000000000</div>
+</body>
+</html>

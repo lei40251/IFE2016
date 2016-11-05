@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inline-Block</title>
+    <style>
+        .Center-Container.is-Inline {
+            text-align: center;
+            overflow: auto;
+            /*other*/
+            height:80vh;
+            width:80vw;
+        }
+
+        .Center-Container.is-Inline:after,
+        .is-Inline .Center-Block {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .Center-Container.is-Inline:after {
+            content: '';
+            height: 100%;
+            margin-left: -0.25em;
+        }
+
+        .is-Inline .Center-Block {
+            min-width: 60%;
+            min-height:20%;
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+<div class="Center-Container is-Inline">
+    <div class="Center-Block">
+        <span>类似表格Table-Cell的优缺点</span>
+    </div>
+</div>
+</body>
+</html>

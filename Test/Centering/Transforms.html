@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>变形Transforms</title>
+    <style>
+        .is-Transformed {
+            width: 50%;
+            height:50%;
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            /*other*/
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+<div class="is-Transformed">
+    <p>IE8不支持，内容可变高度，可能干扰其他 transforms 效果</p>
+</div>
+</body>
+</html>

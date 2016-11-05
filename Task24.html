@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        div {
+            border: 1px solid #ccc;
+            padding: 50px;
+            float: left;
+            width: 50%;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+
+        .root {
+            width: 100%;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        input[type=button] {
+            padding: 8px 20px;
+            margin: 20px;
+        }
+    </style>
+    <title>Task23</title>
+</head>
+<body>
+<div class="root">
+    <div class="child_1">a
+        <div class="child_2">b
+            <div class="child_3">c</div>
+            <div class="child_3">d</div>
+        </div>
+        <div class="child_2">e
+            <div class="child_3">f</div>
+            <div class="child_3">g</div>
+            <div class="child_3">h</div>
+            <div class="child_3">i</div>
+        </div>
+    </div>
+    <div class="child_1">j
+        <div class="child_2">k
+            <div class="child_3">l</div>
+            <div class="child_3">m</div>
+        </div>
+        <div class="child_2">n
+            <div class="child_3">o</div>
+            <div class="child_3">p</div>
+        </div>
+    </div>
+</div>
+<p>
+    <input type="text" class="content">
+    <input type="button" class="add" value="添加节点">
+    <input type="button" class="delNode" value="删除选中节点">
+    <input type="button" class="dlr" value="前序">
+    <input type="text" class="txt"><input class="search" type="button" value="查找">
+</p>
+<script !src="">
+    (function () {
+        var delBtn = document.querySelector('.delNode');
+        var dlr = document.querySelector('.dlr');
+        var search = document.querySelector('.search');
+        var txt = document.querySelector('.txt');
+        var root = document.querySelector('.root');
+        var div = document.body.querySelectorAll('div');
+        var content = document.querySelector('.content');
+        var addBtn = document.querySelector('.add');
+        var selectDiv = '';
+        var animationList = [];
+        var i = 0;
+
+        function fDlr(node) {
+            if (node) {
+                if (node.children && node.children.length > 1) {
+                    for (let i = 0; i < node.children.length; ++i) {
+                        fDlr(node.children[i]);
+                    }
+                }
+                animationList.push(node);
+                console.log(node.className);
+            }
+        }
+
+        function animation(arr) {
+            if (i < arr.length) {
+                arr[i].style.backgroundColor = 'blue';
+                setTimeout(function () {
+                    arr[i].style.backgroundColor = '#fff';
+                    i++;
+                    animation(arr);
+                }, 500)
+            }
+        }
+
+        function queryText(arr, text) {
+            if (i < arr.length) {
+                arr[i].style.backgroundColor = 'blue';
+                if (arr[i].innerText == text) {
+                    arr[i].style.backgroundColor = 'red';
+                    return true;
+                }
+                setTimeout(function () {
+                    arr[i].style.backgroundColor = '#fff';
+                    i++;
+                    queryText(arr, text);
+                }, 500)
+            } else {
+                alert('no');
+            }
+        }
+
+        function clearStyle(node) {
+            var nodeList = node.querySelectorAll('div');
+            for (let i = 0; i < nodeList.length; ++i) {
+                nodeList[i].style.backgroundColor = "#fff";
+            }
+        }
+
+        function delNode(node) {
+            node.parentNode.removeChild(node);
+        }
+
+        function addNode(node, content) {
+            let div = document.createElement('div');
+            div.innerText = content;
+            node.appendChild(div);
+        }
+
+        for (let i = 0; i < div.length; ++i) {
+            div[i].onclick = function (e) {
+                clearStyle(document.body);
+                this.style.backgroundColor = 'green';
+                selectDiv = this;
+                e.stopPropagation();
+            }
+        }
+
+        addBtn.onclick = function () {
+            addNode(selectDiv, content.value.trim());
+        }
+
+        delBtn.onclick = function () {
+            delNode(selectDiv);
+        }
+
+        dlr.onclick = function () {
+            i = 0;
+            animationList = [];
+            fDlr(root);
+            animation(animationList);
+        }
+
+        search.onclick = function () {
+            i = 0;
+            animationList = [];
+            fDlr(root);
+            queryText(animationList, txt.value);
+        }
+
+    })()
+</script>
+</body>
+</html>

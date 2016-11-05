@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task</title>
+    <style>
+        select {
+            min-width: 230px;
+            min-height: 30px;
+        }
+
+        label {
+            /*float: left;*/
+        }
+
+        input[type=radio] {
+            /*float: left;*/
+        }
+
+        input[type=text] {
+            min-width: 230px;
+            min-height: 28px;
+        }
+
+        li {
+            list-style: none;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<form action="#" class="testForm">
+    <div>
+        <input type="radio" checked name="type" value="student" id="student"><label for="student">在校生</label>
+        <input type="radio" name="type" value="worker" id="worker"><label for="worker">非在校生</label>
+    </div>
+    <ul style="float: left; clear: both;">
+        <li class="student">
+            <label for="">学校</label>
+            <select class="prov" id="">
+            </select>
+            <select class="school" id="school">
+            </select>
+        </li>
+        <li class="worker" style="display: none;">
+            <label>就业单位</label>
+            <input type="text" name="company">
+        </li>
+    </ul>
+</form>
+<script !src="">
+    (function () {
+        var data = {
+            "beijing": ["bd", "qh"],
+            "heibei": ["ty", "hd"],
+            "tianjin": ["td", "nk"]
+        };
+
+        function renderSelect(arr, node) {
+            var str = '';
+            for (let i in arr) {
+                str += `<option>${arr[i]}</option>`;
+            }
+            node.innerHTML = str;
+        }
+
+        var student = document.querySelector('.student');
+        var worker = document.querySelector('.worker');
+        var prov = document.querySelector('.prov');
+        var school = document.querySelector('.school');
+        var tempArr = Object.keys(data);
+        renderSelect(tempArr, prov);
+        renderSelect(data[tempArr[0]], school);
+
+        prov.onchange = function () {
+            renderSelect(data[prov.options[prov.selectedIndex].value], school)
+        }
+
+        var radio = document.getElementsByName('type');
+        var form = document.querySelector('.testForm');
+        form.addEventListener('click', function (e) {
+            if (e.target.nodeName.toLocaleLowerCase() == 'label' || e.target.name == 'type') {
+                for (let i = 0; i < radio.length; ++i) {
+                    if (radio[i].checked == true) {
+                        document.querySelector(`.${radio[i].value}`).style.display = 'block';
+                    } else {
+                        document.querySelector(`.${radio[i].value}`).style.display = 'none';
+                    }
+                }
+            }
+        })
+    })()
+</script>
+</body>
+</html>
